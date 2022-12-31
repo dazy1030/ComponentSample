@@ -8,12 +8,14 @@
 import UIKit
 
 final class RootViewController: UIViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        setup()
     }
-
-
+    
+    private func setup() {
+        title = "Components"
+        view.backgroundColor = .systemGroupedBackground
+    }
 }
 
