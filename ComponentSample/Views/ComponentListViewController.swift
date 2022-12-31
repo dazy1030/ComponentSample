@@ -1,5 +1,5 @@
 //
-//  RootViewController.swift
+//  ComponentListViewController.swift
 //  ComponentSample
 //
 //  Created by 小田島 直樹 on 2022/12/31.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension RootViewController {
+extension ComponentListViewController {
     enum Section {
         case components
     }
@@ -27,13 +27,13 @@ extension RootViewController {
     }
 }
 
-final class RootViewController: UIViewController {
-    @IBOutlet private weak var componentCollectionView: UICollectionView! {
+final class ComponentListViewController: UIViewController {
+    @IBOutlet private weak var componentListCollectionView: UICollectionView! {
         didSet {
             let configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
             let layout = UICollectionViewCompositionalLayout.list(using: configuration)
-            componentCollectionView.collectionViewLayout = layout
-            componentCollectionView.delegate = self
+            componentListCollectionView.collectionViewLayout = layout
+            componentListCollectionView.delegate = self
         }
     }
     
@@ -45,8 +45,8 @@ final class RootViewController: UIViewController {
         cell.accessories = [.disclosureIndicator()]
     }
     
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
-    private lazy var componentDataSource = DataSource(collectionView: componentCollectionView) { [unowned self] collectionView, indexPath, item in
+    typealias ListDataSource = UICollectionViewDiffableDataSource<Section, Item>
+    private lazy var componentDataSource = ListDataSource(collectionView: componentListCollectionView) { [unowned self] collectionView, indexPath, item in
         collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
     }
     
@@ -68,7 +68,7 @@ final class RootViewController: UIViewController {
 
 // MARK: - UICollectionViewDelegate
 
-extension RootViewController: UICollectionViewDelegate {
+extension ComponentListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
     }

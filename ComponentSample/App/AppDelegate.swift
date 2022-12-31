@@ -12,7 +12,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let rootVC: RootViewController = .instantiateFromStoryboard()
+        let rootVC: ComponentListViewController = .instantiateFromStoryboard()
         let navigationC = UINavigationController(rootViewController: rootVC)
         navigationC.navigationBar.prefersLargeTitles = true
         window?.rootViewController = navigationC
