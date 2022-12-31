@@ -15,8 +15,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootVC: ComponentListViewController = .instantiateFromStoryboard()
         let navigationC = UINavigationController(rootViewController: rootVC)
         navigationC.navigationBar.prefersLargeTitles = true
-        window?.rootViewController = navigationC
-        window?.makeKeyAndVisible()
+        let window = UIWindow()
+        self.window = window
+        window.rootViewController = navigationC
+        window.makeKeyAndVisible()
         return true
     }
 }
