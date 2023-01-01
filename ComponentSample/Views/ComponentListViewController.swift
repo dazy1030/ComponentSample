@@ -13,11 +13,11 @@ extension ComponentListViewController {
     }
     
     enum Item: Identifiable, CaseIterable {
-        case sample
+        case carousel
         
         var name: String {
             switch self {
-            case .sample: return "Sample"
+            case .carousel: return "Carousel"
             }
         }
         
@@ -28,6 +28,8 @@ extension ComponentListViewController {
 }
 
 final class ComponentListViewController: UIViewController {
+    private let components = Item.allCases
+    
     @IBOutlet private weak var componentListCollectionView: UICollectionView! {
         didSet {
             let configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
@@ -56,7 +58,7 @@ final class ComponentListViewController: UIViewController {
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.components])
-        snapshot.appendItems(Item.allCases)
+        snapshot.appendItems(components)
         componentDataSource.apply(snapshot)
     }
     
@@ -71,5 +73,13 @@ final class ComponentListViewController: UIViewController {
 extension ComponentListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        let component = components[indexPath.row]
+        let viewController: UIViewController
+        switch component {
+        case .carousel:
+            let carouselVC: CarouselViewController = .instantiateFromStoryboard()
+            viewController = carouselVC
+        }
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }

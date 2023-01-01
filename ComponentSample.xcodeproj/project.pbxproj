@@ -13,6 +13,8 @@
 		E9C806F5296063F0005EFC12 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9C806F4296063F0005EFC12 /* Assets.xcassets */; };
 		E9C806F8296063F0005EFC12 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9C806F6296063F0005EFC12 /* LaunchScreen.storyboard */; };
 		E9C80703296068D8005EFC12 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C80702296068D8005EFC12 /* UIViewControllerExtensions.swift */; };
+		E9C80706296193A1005EFC12 /* CarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C80705296193A1005EFC12 /* CarouselViewController.swift */; };
+		E9C80708296193B7005EFC12 /* CarouselViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9C80707296193B7005EFC12 /* CarouselViewController.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		E9C806F7296063F0005EFC12 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E9C806F9296063F0005EFC12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9C80702296068D8005EFC12 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
+		E9C80705296193A1005EFC12 /* CarouselViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselViewController.swift; sourceTree = "<group>"; };
+		E9C80707296193B7005EFC12 /* CarouselViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CarouselViewController.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,7 @@
 			children = (
 				E9C806EF296063EE005EFC12 /* ComponentListViewController.swift */,
 				E9C806F1296063EE005EFC12 /* ComponentListViewController.storyboard */,
+				E9C8070429619373005EFC12 /* Carousel */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -89,6 +94,15 @@
 				E9C80702296068D8005EFC12 /* UIViewControllerExtensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E9C8070429619373005EFC12 /* Carousel */ = {
+			isa = PBXGroup;
+			children = (
+				E9C80705296193A1005EFC12 /* CarouselViewController.swift */,
+				E9C80707296193B7005EFC12 /* CarouselViewController.storyboard */,
+			);
+			path = Carousel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,6 +166,7 @@
 				E9C806F8296063F0005EFC12 /* LaunchScreen.storyboard in Resources */,
 				E9C806F5296063F0005EFC12 /* Assets.xcassets in Resources */,
 				E9C806F3296063EE005EFC12 /* ComponentListViewController.storyboard in Resources */,
+				E9C80708296193B7005EFC12 /* CarouselViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,6 +177,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9C80706296193A1005EFC12 /* CarouselViewController.swift in Sources */,
 				E9C806F0296063EE005EFC12 /* ComponentListViewController.swift in Sources */,
 				E9C80703296068D8005EFC12 /* UIViewControllerExtensions.swift in Sources */,
 				E9C806EC296063EE005EFC12 /* AppDelegate.swift in Sources */,
