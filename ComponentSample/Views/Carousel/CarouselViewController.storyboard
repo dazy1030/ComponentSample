@@ -16,9 +16,34 @@
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="U65-un-Fy6">
+                                <rect key="frame" x="0.0" y="342.66666666666669" width="393" height="192.00000000000006"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="192" id="ch9-zx-ZLX"/>
+                                    <constraint firstAttribute="width" secondItem="U65-un-Fy6" secondAttribute="height" multiplier="375:192" priority="750" id="n0y-7T-SKA"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Cgm-Br-XH3">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="U65-un-Fy6" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="0nG-tB-tzY"/>
+                            <constraint firstItem="U65-un-Fy6" firstAttribute="centerY" secondItem="vDu-zF-Fre" secondAttribute="centerY" id="5TJ-6R-sOV"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="U65-un-Fy6" secondAttribute="trailing" id="b7a-0s-uSh"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="carouselCollectionView" destination="U65-un-Fy6" id="KnU-RF-gdb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
