@@ -41,9 +41,7 @@ final class CarouselViewController: UIViewController {
         }
     }
     
-    /// 無限スクロールにするために、前後に同じものを表示する。（3倍する）
-    /// 左のグループ | 真ん中のグループ | 右のグループ
-    private let items = Item.allCases + Item.allCases + Item.allCases
+    private let items = Item.allCases
     /// セルが初回表示かどうかのフラグ。
     private var isFirstAppear = true
     
@@ -84,11 +82,12 @@ final class CarouselViewController: UIViewController {
 
 extension CarouselViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        items.count
+        // 無限スクロールで前後をつなげるために、前と後ろに同じものを表示させる。
+        items.count * 3
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: items[indexPath.row])
+        collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: items[indexPath.row % items.count])
     }
 }
 
@@ -110,7 +109,7 @@ extension CarouselViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         // セルの初回表示時はページングの中央表示がされていないので中央に寄せる。
         guard isFirstAppear, indexPath.row == 0 else { return }
-        collectionView.scrollToItem(at: IndexPath(row: items.count / 3, section: 0), at: .centeredHorizontally, animated: false)
+        collectionView.scrollToItem(at: IndexPath(row: items.count, section: 0), at: .centeredHorizontally, animated: false)
         isFirstAppear = false
     }
     
