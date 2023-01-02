@@ -44,6 +44,8 @@ final class CarouselViewController: UIViewController {
     /// 無限スクロールにするために、前後に同じものを表示する。（3倍する）
     /// 左のグループ | 真ん中のグループ | 右のグループ
     private let items = Item.allCases + Item.allCases + Item.allCases
+    /// セルが初回表示かどうかのフラグ。
+    private var isFirstAppear = true
     
     @IBOutlet private weak var carouselCollectionView: UICollectionView! {
         didSet {
@@ -103,6 +105,13 @@ extension CarouselViewController: UICollectionViewDelegateFlowLayout {
             cellWidth = 280
         }
         return CGSize(width: cellWidth, height: collectionView.frame.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        // セルの初回表示時はページングの中央表示がされていないので中央に寄せる。
+        guard isFirstAppear, indexPath.row == 0 else { return }
+        collectionView.scrollToItem(at: IndexPath(row: items.count / 3, section: 0), at: .centeredHorizontally, animated: false)
+        isFirstAppear = false
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
