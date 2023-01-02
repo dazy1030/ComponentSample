@@ -15,6 +15,7 @@
 		E9C80703296068D8005EFC12 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C80702296068D8005EFC12 /* UIViewControllerExtensions.swift */; };
 		E9C80706296193A1005EFC12 /* CarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C80705296193A1005EFC12 /* CarouselViewController.swift */; };
 		E9C80708296193B7005EFC12 /* CarouselViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9C80707296193B7005EFC12 /* CarouselViewController.storyboard */; };
+		E9C8070A29632869005EFC12 /* UICollectionViewFlowLayoutExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C8070929632869005EFC12 /* UICollectionViewFlowLayoutExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		E9C80702296068D8005EFC12 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		E9C80705296193A1005EFC12 /* CarouselViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselViewController.swift; sourceTree = "<group>"; };
 		E9C80707296193B7005EFC12 /* CarouselViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CarouselViewController.storyboard; sourceTree = "<group>"; };
+		E9C8070929632869005EFC12 /* UICollectionViewFlowLayoutExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewFlowLayoutExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 		E9C80701296068B3005EFC12 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				E9C8070929632869005EFC12 /* UICollectionViewFlowLayoutExtension.swift */,
 				E9C80702296068D8005EFC12 /* UIViewControllerExtensions.swift */,
 			);
 			path = Extensions;
@@ -179,6 +182,7 @@
 			files = (
 				E9C80706296193A1005EFC12 /* CarouselViewController.swift in Sources */,
 				E9C806F0296063EE005EFC12 /* ComponentListViewController.swift in Sources */,
+				E9C8070A29632869005EFC12 /* UICollectionViewFlowLayoutExtension.swift in Sources */,
 				E9C80703296068D8005EFC12 /* UIViewControllerExtensions.swift in Sources */,
 				E9C806EC296063EE005EFC12 /* AppDelegate.swift in Sources */,
 			);

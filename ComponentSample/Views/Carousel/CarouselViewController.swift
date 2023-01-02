@@ -45,7 +45,7 @@ final class CarouselViewController: UIViewController {
     
     @IBOutlet private weak var carouselCollectionView: UICollectionView! {
         didSet {
-            let layout = UICollectionViewFlowLayout()
+            let layout = UICollectionViewFlowLayout.centerAligned
             // 横スクロールを指定。
             layout.scrollDirection = .horizontal
             // 仕様通りに隙間を指定。
