@@ -125,6 +125,15 @@ extension CarouselViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: calcItemWidth(fromCollectionViewWidth: collectionViewWidth), height: collectionView.frame.height)
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        // 無限スクロールでない時にもセルを中央に表示するための処理。
+        guard !isInfiniteScroll else { return .zero }
+        let itemWidth = calcItemWidth(fromCollectionViewWidth: collectionView.frame.width)
+        // 左右の端のアイテムが中央表示されるインセット。
+        let inset = (collectionView.frame.width - itemWidth) / 2
+        return UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         // セルの初回表示時はページングの中央表示がされていないので中央に寄せる。
         guard isInfiniteScroll, isFirstAppear, indexPath.row == 0 else { return }
