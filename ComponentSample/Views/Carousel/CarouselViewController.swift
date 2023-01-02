@@ -41,7 +41,9 @@ final class CarouselViewController: UIViewController {
         }
     }
     
-    private let items = Item.allCases
+    /// 無限スクロールにするために、前後に同じものを表示する。（3倍する）
+    /// 左のグループ | 真ん中のグループ | 右のグループ
+    private let items = Item.allCases + Item.allCases + Item.allCases
     
     @IBOutlet private weak var carouselCollectionView: UICollectionView! {
         didSet {
@@ -101,5 +103,19 @@ extension CarouselViewController: UICollectionViewDelegateFlowLayout {
             cellWidth = 280
         }
         return CGSize(width: cellWidth, height: collectionView.frame.height)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // 無限スクロール処理はアイテムが1つの時には行わない。
+        guard items.count > 1 else { return }
+        // 真ん中のグループ以外の時は真ん中へスクロールさせる。
+        let groupWidth = scrollView.contentSize.width / 3
+        if scrollView.contentOffset.x < groupWidth {
+            // 左のグループの時。
+            scrollView.contentOffset.x += groupWidth
+        } else if scrollView.contentOffset.x > groupWidth * 2 {
+            // 右のグループの時。
+            scrollView.contentOffset.x -=  groupWidth
+        }
     }
 }
