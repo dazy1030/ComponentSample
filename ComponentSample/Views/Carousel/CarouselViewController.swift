@@ -53,6 +53,8 @@ final class CarouselViewController: UIViewController {
             carouselCollectionView.collectionViewLayout = layout
             // インジケータを非表示。
             carouselCollectionView.showsHorizontalScrollIndicator = false
+            // スクロール後の減速を高速に設定。
+            carouselCollectionView.decelerationRate = .fast
             carouselCollectionView.dataSource = self
             carouselCollectionView.delegate = self
         }
