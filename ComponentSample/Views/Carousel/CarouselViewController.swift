@@ -44,6 +44,9 @@ final class CarouselViewController: UIViewController {
     private let items = Item.allCases
     /// セルが初回表示かどうかのフラグ。
     private var isFirstAppear = true
+    /// 無限スクロールさせるかのフラグ。
+    private var isInfiniteScroll = true
+    private let lineSpacing = 16.0
     
     @IBOutlet private weak var carouselCollectionView: UICollectionView! {
         didSet {
@@ -51,7 +54,7 @@ final class CarouselViewController: UIViewController {
             // 横スクロールを指定。
             layout.scrollDirection = .horizontal
             // 仕様通りに隙間を指定。
-            layout.minimumLineSpacing = 16.0
+            layout.minimumLineSpacing = lineSpacing
             carouselCollectionView.collectionViewLayout = layout
             // インジケータを非表示。
             carouselCollectionView.showsHorizontalScrollIndicator = false
@@ -71,10 +74,24 @@ final class CarouselViewController: UIViewController {
         setup()
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        // 画面サイズによって無限スクロールが有効化切り替わる場合があるためリロードする。
+        carouselCollectionView.reloadData()
+    }
+    
     private func setup() {
         title = "Carousel"
         carouselCollectionView.backgroundColor = nil
         view.backgroundColor = .systemGroupedBackground
+    }
+    
+    /// 仕様通りのセルの幅を計算する。
+    private func calcItemWidth(fromCollectionViewWidth collectionViewWidth: CGFloat) -> CGFloat {
+        if collectionViewWidth < 375 {
+            return 280 * collectionViewWidth / 375
+        } else {
+            return 280
+        }
     }
 }
 
@@ -82,8 +99,17 @@ final class CarouselViewController: UIViewController {
 
 extension CarouselViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // 無限スクロールで前後をつなげるために、前と後ろに同じものを表示させる。
-        items.count * 3
+        let collectionViewWidth = collectionView.frame.width
+        let itemWidth = calcItemWidth(fromCollectionViewWidth: collectionViewWidth)
+        if CGFloat(items.count) * itemWidth + CGFloat(items.count - 1) * lineSpacing <= collectionViewWidth {
+            // 全てのアイテムが画面内に収まる場合は無限スクロールさせない。
+            isInfiniteScroll = false
+            return items.count
+        } else {
+            // 無限スクロールで前後をつなげるために、前と後ろに同じものを表示させる。
+            isInfiniteScroll = true
+            return items.count * 3
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -95,27 +121,19 @@ extension CarouselViewController: UICollectionViewDataSource {
 
 extension CarouselViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // 仕様通りのセルのサイズを指定。
         let collectionViewWidth = collectionView.frame.width
-        let cellWidth: CGFloat
-        if collectionViewWidth < 375 {
-            cellWidth = 280 * collectionViewWidth / 375
-        } else {
-            cellWidth = 280
-        }
-        return CGSize(width: cellWidth, height: collectionView.frame.height)
+        return CGSize(width: calcItemWidth(fromCollectionViewWidth: collectionViewWidth), height: collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         // セルの初回表示時はページングの中央表示がされていないので中央に寄せる。
-        guard isFirstAppear, indexPath.row == 0 else { return }
+        guard isInfiniteScroll, isFirstAppear, indexPath.row == 0 else { return }
         collectionView.scrollToItem(at: IndexPath(row: items.count, section: 0), at: .centeredHorizontally, animated: false)
         isFirstAppear = false
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // 無限スクロール処理はアイテムが1つの時には行わない。
-        guard items.count > 1 else { return }
+        guard isInfiniteScroll else { return }
         // 真ん中のグループ以外の時は真ん中へスクロールさせる。
         let groupWidth = scrollView.contentSize.width / 3
         if scrollView.contentOffset.x < groupWidth {
