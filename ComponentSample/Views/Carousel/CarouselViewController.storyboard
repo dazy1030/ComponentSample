@@ -32,6 +32,9 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="dhI-Vf-HPG">
+                                <rect key="frame" x="138.66666666666666" y="542.66666666666663" width="116" height="26"/>
+                            </pageControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -39,10 +42,13 @@
                             <constraint firstItem="U65-un-Fy6" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="0nG-tB-tzY"/>
                             <constraint firstItem="U65-un-Fy6" firstAttribute="centerY" secondItem="vDu-zF-Fre" secondAttribute="centerY" id="5TJ-6R-sOV"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="U65-un-Fy6" secondAttribute="trailing" id="b7a-0s-uSh"/>
+                            <constraint firstItem="dhI-Vf-HPG" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="iHH-3i-JCc"/>
+                            <constraint firstItem="dhI-Vf-HPG" firstAttribute="top" secondItem="U65-un-Fy6" secondAttribute="bottom" constant="8" id="w7K-5e-bVo"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="carouselCollectionView" destination="U65-un-Fy6" id="KnU-RF-gdb"/>
+                        <outlet property="pageControl" destination="dhI-Vf-HPG" id="hCC-zA-PgZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

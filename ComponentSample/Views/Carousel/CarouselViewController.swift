@@ -78,6 +78,17 @@ final class CarouselViewController: UIViewController {
             carouselCollectionView.delegate = self
         }
     }
+    
+    @IBOutlet private weak var pageControl: UIPageControl! {
+        didSet {
+            pageControl.currentPageIndicatorTintColor = .systemGray
+            pageControl.pageIndicatorTintColor = .systemGray3
+            pageControl.numberOfPages = items.count
+            // ページコントロールの操作を禁止。
+            pageControl.isUserInteractionEnabled = false
+        }
+    }
+    
     /// 表示するセルの設定を行う。
     private let cellRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Item> { cell, _, item in
         cell.contentView.backgroundColor = item.color
