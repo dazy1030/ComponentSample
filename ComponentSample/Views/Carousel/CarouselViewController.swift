@@ -145,11 +145,14 @@ extension CarouselViewController: UICollectionViewDelegateFlowLayout {
         guard isInfiniteScroll else { return }
         // 真ん中のグループ以外の時は真ん中へスクロールさせる。
         let groupWidth = scrollView.contentSize.width / 3
-        if scrollView.contentOffset.x < groupWidth {
-            // 左のグループの時。
+        let itemSize = calcItemWidth(fromCollectionViewWidth: scrollView.frame.width)
+        // 表示されているコンテンツの中央のX座標。
+        let visibleCenterX = scrollView.contentOffset.x + itemSize / 2
+        if visibleCenterX < groupWidth {
+            // 左のグループが中央に表示される時。
             scrollView.contentOffset.x += groupWidth
-        } else if scrollView.contentOffset.x > groupWidth * 2 {
-            // 右のグループの時。
+        } else if visibleCenterX > groupWidth * 2 {
+            // 右のグループが中央に表示される時。
             scrollView.contentOffset.x -=  groupWidth
         }
     }
