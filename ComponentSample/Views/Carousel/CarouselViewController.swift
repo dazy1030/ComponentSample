@@ -47,6 +47,20 @@ final class CarouselViewController: UIViewController {
     /// 無限スクロールさせるかのフラグ。
     private var isInfiniteScroll = true
     private let lineSpacing = 16.0
+    private var _itemWidth: CGFloat?
+    private var itemWidth: CGFloat {
+        if let _itemWidth {
+            return _itemWidth
+        }
+        let itemWidth: CGFloat
+        if carouselCollectionView.frame.width < 375 {
+            itemWidth = 280 * carouselCollectionView.frame.width / 375
+        } else {
+            itemWidth = 280
+        }
+        _itemWidth = itemWidth
+        return itemWidth
+    }
     
     @IBOutlet private weak var carouselCollectionView: UICollectionView! {
         didSet {
@@ -76,6 +90,7 @@ final class CarouselViewController: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         // 画面サイズによって無限スクロールが有効化切り替わる場合があるためリロードする。
+        _itemWidth = nil
         carouselCollectionView.reloadData()
     }
     
@@ -84,24 +99,13 @@ final class CarouselViewController: UIViewController {
         carouselCollectionView.backgroundColor = nil
         view.backgroundColor = .systemGroupedBackground
     }
-    
-    /// 仕様通りのセルの幅を計算する。
-    private func calcItemWidth(fromCollectionViewWidth collectionViewWidth: CGFloat) -> CGFloat {
-        if collectionViewWidth < 375 {
-            return 280 * collectionViewWidth / 375
-        } else {
-            return 280
-        }
-    }
 }
 
 // MARK: - UICollectionViewDataSource
 
 extension CarouselViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let collectionViewWidth = collectionView.frame.width
-        let itemWidth = calcItemWidth(fromCollectionViewWidth: collectionViewWidth)
-        if CGFloat(items.count) * itemWidth + CGFloat(items.count - 1) * lineSpacing <= collectionViewWidth {
+        if CGFloat(items.count) * itemWidth + CGFloat(items.count - 1) * lineSpacing <= collectionView.frame.width {
             // 全てのアイテムが画面内に収まる場合は無限スクロールさせない。
             isInfiniteScroll = false
             return items.count
@@ -121,14 +125,12 @@ extension CarouselViewController: UICollectionViewDataSource {
 
 extension CarouselViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let collectionViewWidth = collectionView.frame.width
-        return CGSize(width: calcItemWidth(fromCollectionViewWidth: collectionViewWidth), height: collectionView.frame.height)
+        CGSize(width: itemWidth, height: collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         // 無限スクロールでない時にもセルを中央に表示するための処理。
         guard !isInfiniteScroll else { return .zero }
-        let itemWidth = calcItemWidth(fromCollectionViewWidth: collectionView.frame.width)
         // 左右の端のアイテムが中央表示されるインセット。
         let inset = (collectionView.frame.width - itemWidth) / 2
         return UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
@@ -145,9 +147,8 @@ extension CarouselViewController: UICollectionViewDelegateFlowLayout {
         guard isInfiniteScroll else { return }
         // 真ん中のグループ以外の時は真ん中へスクロールさせる。
         let groupWidth = scrollView.contentSize.width / 3
-        let itemSize = calcItemWidth(fromCollectionViewWidth: scrollView.frame.width)
         // 表示されているコンテンツの中央のX座標。
-        let visibleCenterX = scrollView.contentOffset.x + itemSize / 2
+        let visibleCenterX = scrollView.contentOffset.x + itemWidth / 2
         if visibleCenterX < groupWidth {
             // 左のグループが中央に表示される時。
             scrollView.contentOffset.x += groupWidth
