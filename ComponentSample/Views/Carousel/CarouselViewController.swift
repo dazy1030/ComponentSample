@@ -155,17 +155,26 @@ extension CarouselViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard isInfiniteScroll else { return }
-        // 真ん中のグループ以外の時は真ん中へスクロールさせる。
-        let groupWidth = scrollView.contentSize.width / 3
-        // 表示されているコンテンツの中央のX座標。
-        let visibleCenterX = scrollView.contentOffset.x + itemWidth / 2
-        if visibleCenterX < groupWidth {
-            // 左のグループが中央に表示される時。
-            scrollView.contentOffset.x += groupWidth
-        } else if visibleCenterX > groupWidth * 2 {
-            // 右のグループが中央に表示される時。
-            scrollView.contentOffset.x -=  groupWidth
+        if isInfiniteScroll {
+            // 真ん中のグループ以外の時は真ん中へスクロールさせる。
+            let groupWidth = scrollView.contentSize.width / 3
+            // 表示されているコンテンツの中央のX座標。
+            let visibleCenterX = scrollView.contentOffset.x + itemWidth / 2
+            if visibleCenterX < groupWidth {
+                // 左のグループが中央に表示される時。
+                scrollView.contentOffset.x += groupWidth
+            } else if visibleCenterX > groupWidth * 2 {
+                // 右のグループが中央に表示される時。
+                scrollView.contentOffset.x -=  groupWidth
+            }
         }
+        // ページコントロールを追従させる処理。
+        let itemCount = isInfiniteScroll ? items.count * 3 : items.count
+        // コンテンツの幅をアイテムの数で等分した幅。
+        let pageWidth = scrollView.contentSize.width / CGFloat(itemCount)
+        // スクロールビューの中央をスタートとして、スクロールした距離を1ページ分の幅で割る。
+        // 無限スクロールしている場合はアイテム数が3倍になっているのでmod(items.count)する。
+        let page = Int((scrollView.contentOffset.x + scrollView.frame.width / 2) / pageWidth) % items.count
+        pageControl.currentPage = page
     }
 }
